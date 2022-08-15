@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import Post from './components/Post';
+import ImageUpload from './components/ImageUpload';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -7,7 +8,7 @@ import Input from '@mui/material/Input'
 import './App.css';
 import { useState } from 'react';
 import {db, auth} from './firebase.js'
-import { collection, onSnapshot, query } from 'firebase/firestore';
+import { collection, onSnapshot, query, orderBy } from 'firebase/firestore';
 import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut, signInWithEmailAndPassword } from "firebase/auth";
 
 
@@ -57,7 +58,7 @@ function App() {
   }, [user, username]);
   
   useEffect(() => {
-    const q = query(collection(db, "posts"));
+    const q = query(collection(db, "posts"), orderBy('timeStamp'));
     onSnapshot(q, (querySnapshot) => {
       setPosts(querySnapshot.docs.map(doc => ({
         id:doc.id,
@@ -144,20 +145,22 @@ function App() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             />
-            
             <Button type='submit' onClick={signUp}>Sign Up</Button>
-              
-            
           </form> 
-          
         </Box>
       </Modal>
       <div className="app__header">
         <img className="app__headerImage"
         src = "https://www.instagram.com/static/images/web/logged_out_wordmark.png/7a252de00b20.png"
         alt=""/>
+        
         {user ? (
-          <Button type='submit' onClick={() => signOut(auth)}>Logout</Button>
+          <div>
+            <Button onClick={() => signOut(auth)}>Logout</Button>
+            <ImageUpload username={user.displayName}></ImageUpload>
+          </div>
+          
+          
         ):(
           <div>
             <Button onClick={() => setOpen(true)}>Sign Up</Button>

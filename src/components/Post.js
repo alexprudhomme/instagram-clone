@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import "./Post.css"
 import {Avatar} from '@mui/material';
 function Post({username, caption, imageURL}){
