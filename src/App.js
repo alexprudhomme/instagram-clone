@@ -170,12 +170,14 @@ function App() {
         )}
         
       </div>
-      <h1>Hello we build</h1>
-      { 
-        posts.map(({id, post}) => (
-          <Post key={id} username={post.username} caption={post.caption} imageURL={post.imageURL}></Post>
-        ))
-      }
+      <div className='app__posts'>
+        { 
+          posts.map(({id, post}) => (
+            <Post key={id} username={post.username} caption={post.caption} imageURL={post.imageURL}></Post>
+          ))
+        }
+      </div>
+      
     </div>
   );
 }

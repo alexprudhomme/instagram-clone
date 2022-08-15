@@ -24,4 +24,9 @@
   max-width: 50px;
   align-self: center;
 }
+.app__posts{
+  padding: 20px;
+  justify-content: center;
+  margin: auto;
+}
 

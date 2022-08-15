@@ -65,7 +65,7 @@ function ImageUpload({username}) {
 
     return ( 
     <div className='imageUpload'>
-        <Button onClick={() => setOpen(true)}>Image Upload</Button>
+        <Button onClick={() => setOpen(true)}>Post</Button>
         <Modal
         open={open}
         onClose={()=> setOpen(false)}
