@@ -8,7 +8,7 @@ import './App.css';
 import { useState } from 'react';
 import {db, auth} from './firebase.js'
 import { collection, onSnapshot, query } from 'firebase/firestore';
-import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile, signOut, signInWithEmailAndPassword } from "firebase/auth";
 
 
 const style = {
@@ -25,6 +25,7 @@ const style = {
 };
 
 function App() {
+  const [openSignIn, setOpenSignIn] = useState('');
   const [posts, setPosts] = useState([]);
   const [open, setOpen] = useState(false);
   const [username, setUsername] = useState('');
@@ -69,15 +70,51 @@ function App() {
     event.preventDefault()
     createUserWithEmailAndPassword(auth, email, password)
     .then((authUser) => {
-      authUser.user.updateProfile({
-        displayName: username,
+      return updateProfile(authUser, {
+        displayName: username
       })
     })
     .catch((error) => alert(error.message))
+    setOpen(false);
+  }
+  const signIn = (event) => {
+    event.preventDefault()
+    signInWithEmailAndPassword(auth, email, password)
+    .catch((error) => alert(error.message))
+
+    setOpenSignIn(false);
   }
 
   return (
     <div className="app">
+      <Modal
+        open={openSignIn}
+        onClose={()=> setOpenSignIn(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+         <form className='app__signup'>
+          <img className="app__signupImage"
+            src = "https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg"
+            alt=""/>
+            <Input
+            type="email"
+            placeholder="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
+            type="password"
+            placeholder="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button type='submit' onClick={signIn}>Sign In</Button>
+          </form> 
+          
+        </Box>
+      </Modal>
       <Modal
         open={open}
         onClose={()=> setOpen(false)}
@@ -107,17 +144,28 @@ function App() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             />
+            
             <Button type='submit' onClick={signUp}>Sign Up</Button>
+              
+            
           </form> 
           
         </Box>
       </Modal>
       <div className="app__header">
-      
         <img className="app__headerImage"
         src = "https://www.instagram.com/static/images/web/logged_out_wordmark.png/7a252de00b20.png"
         alt=""/>
-        <Button onClick={() => setOpen(true)}>Open modal</Button>
+        {user ? (
+          <Button type='submit' onClick={() => signOut(auth)}>Logout</Button>
+        ):(
+          <div>
+            <Button onClick={() => setOpen(true)}>Sign Up</Button>
+            <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
+          </div>
+          
+        )}
+        
       </div>
       <h1>Hello we build</h1>
       { 
