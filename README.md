@@ -1,6 +1,10 @@
-# Getting Started with Create React App
+# Instagram clone
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+An Instagram clone with features surch as user authentification and posting and viewing photos
+
+## Built with
+* [![React][React]][React-url]
+* [![Firebase][Firebase]][Firebase-url]
 
 ## Available Scripts
 
@@ -68,3 +72,11 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[React]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://reactjs.org/
+[Firebase]: https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase
+[Firebase-url]: https://firebase.google.com/
+
